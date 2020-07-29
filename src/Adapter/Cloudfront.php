@@ -2,13 +2,13 @@
 
 namespace Agentsquidflaps\Picture\Adapter;
 
-use Agentsquidflaps\Picture\AbstractSource;
+use Agentsquidflaps\Picture\Source;
 
 /**
- * Class CloudfrontSource
+ * Class Cloudfront
  * @package Agentsquidflaps\Picture\Adapter
  */
-class CloudfrontSource extends AbstractSource {
+class Cloudfront extends Source {
 	/**
 	 * @return string
 	 */

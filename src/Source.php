@@ -4,7 +4,7 @@ namespace Agentsquidflaps\Picture;
 
 use Agentsquidflaps\Picture\Adapter\AdapterInterface;
 use Agentsquidflaps\Picture\Traits\RequiresAttributeMarkup;
-use Agentsquidflaps\Picture\Traits\SourceTrait;
+use Agentsquidflaps\Picture\Traits\isSource;
 use Symfony\Component\HttpFoundation\Request;
 
 use function \rawurlencode;
@@ -18,26 +18,26 @@ use function \strcasecmp;
  * Class AbstractSource
  * @package Agentsquidflaps\Picture
  */
-abstract class AbstractSource implements AdapterInterface
+abstract class Source implements AdapterInterface
 {
 	const POSITION_TOP = 1;
 	const POSITION_RIGHT = 2;
 	const POSITION_BOTTOM = 3;
 	const POSITION_LEFT = 4;
-	const POSITION_RIGHT_TOP = 5;
-	const POSITION_RIGHT_BOTTOM = 6;
-	const POSITION_LEFT_BOTTOM = 7;
-	const POSITION_LEFT_TOP = 8;
+	const POSITION_TOP_RIGHT = 5;
+	const POSITION_BOTTOM_RIGHT = 6;
+	const POSITION_BOTTOM_LEFT = 7;
+	const POSITION_TOP_LEFT = 8;
 
 	const POSITIONS = [
 		self::POSITION_TOP => 'top',
 		self::POSITION_RIGHT => 'right',
 		self::POSITION_BOTTOM => 'bottom',
 		self::POSITION_LEFT => 'left',
-		self::POSITION_RIGHT_TOP => 'top-right',
-		self::POSITION_RIGHT_BOTTOM => 'bottom-right',
-		self::POSITION_LEFT_TOP => 'top-left',
-		self::POSITION_LEFT_BOTTOM => 'bottom-left'
+		self::POSITION_TOP_RIGHT => 'top-right',
+		self::POSITION_BOTTOM_RIGHT => 'bottom-right',
+		self::POSITION_TOP_LEFT => 'top-left',
+		self::POSITION_BOTTOM_LEFT => 'bottom-left'
 	];
 
 	const STRATEGY_ENTROPY = 16;
@@ -58,7 +58,7 @@ abstract class AbstractSource implements AdapterInterface
 	private $extension = null;
 
 	use RequiresAttributeMarkup;
-	use SourceTrait;
+	use isSource;
 
 	/**
 	 * @return MediaQuery|null
@@ -274,14 +274,13 @@ abstract class AbstractSource implements AdapterInterface
 	private function isAjaxRequest()
 	{
 		$request = Request::createFromGlobals();
-		$result = false;
 		$requestedWith = $request->server->get('HTTP_X_REQUESTED_WITH');
 
 		if (is_string($requestedWith) && strcasecmp($requestedWith, 'XMLHttpRequest') === 0) {
-			$result = true;
+			return true;
 		}
 
-		return $result;
+		return false;
 	}
 
     public function __toString()

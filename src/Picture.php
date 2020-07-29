@@ -3,7 +3,7 @@
 namespace Agentsquidflaps\Picture;
 
 use Agentsquidflaps\Picture\Traits\RequiresAttributeMarkup;
-use Agentsquidflaps\Picture\Traits\SourceTrait;
+use Agentsquidflaps\Picture\Traits\isSource;
 
 use function \array_pop;
 use function \ucfirst;
@@ -11,11 +11,11 @@ use function \call_user_func;
 
 class Picture
 {
-    /** @var AbstractSource[]|array */
+    /** @var Source[]|array */
     private $sources;
 
     use RequiresAttributeMarkup;
-    use SourceTrait;
+    use isSource;
 
     /**
      * Picture constructor.
@@ -49,7 +49,7 @@ class Picture
         $this->setPictureDefaults($imgSource);
 
         $markup .= $imgSource
-	        ->setTag(AbstractSource::TAG_IMG)
+	        ->setTag(Source::TAG_IMG)
 	        ->setDescription($this->description)
 	        ->getMarkup();
 
@@ -59,10 +59,10 @@ class Picture
     }
 
 	/**
-	 * @param AbstractSource $source
+	 * @param Source $source
 	 * @return $this
 	 */
-	private function setPictureDefaults(AbstractSource $source): Picture
+	private function setPictureDefaults(Source $source): Picture
 	{
 		$this->setParameter($source, 'path');
 		$this->setParameter($source, 'lazyLoaded', 'is');
@@ -81,7 +81,7 @@ class Picture
     }
 
 
-	private function setParameter(AbstractSource $source, string $parameter, string $getterPrefix = 'get')
+	private function setParameter(Source $source, string $parameter, string $getterPrefix = 'get')
 	{
 		$parsedParameter = ucfirst($parameter);
 		if ($this->$parameter && call_user_func([$source, $getterPrefix . $parsedParameter]) === null) {

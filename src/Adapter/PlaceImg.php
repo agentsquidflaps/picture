@@ -2,9 +2,9 @@
 
 namespace Agentsquidflaps\Picture\Adapter;
 
-use Agentsquidflaps\Picture\AbstractSource;
+use Agentsquidflaps\Picture\Source;
 
-class PlaceImg extends AbstractSource
+class PlaceImg extends Source
 {
 
     private const SOURCE_URL = 'http://placeimg.com/';
