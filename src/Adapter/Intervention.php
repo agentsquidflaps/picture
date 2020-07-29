@@ -2,17 +2,17 @@
 
 namespace Agentsquidflaps\Picture\Adapter;
 
-use Agentsquidflaps\Picture\AbstractSource;
-use Agentsquidflaps\Picture\Traits\LocalSource;
+use Agentsquidflaps\Picture\Source;
+use Agentsquidflaps\Picture\Traits\isLocal;
 use Intervention\Image\ImageManagerStatic;
 
 /**
  * Class Intervention
  * @package Agentsquidflaps\Picture\Adapter
  */
-class Intervention extends AbstractSource
+class Intervention extends Source
 {
-	use LocalSource;
+	use isLocal;
 
 	/**
 	 * @return string
@@ -41,7 +41,7 @@ class Intervention extends AbstractSource
 
         $imageManager
 	        ->make($this->getPath())
-            ->fit($this->getWidth(), $this->getHeight(), $callbackFunction, $this->getFit() ? AbstractSource::POSITIONS[$this->getFit()] : 'center')
+            ->fit($this->getWidth(), $this->getHeight(), $callbackFunction, $this->getFit() ? Source::POSITIONS[$this->getFit()] : 'center')
             ->save($this->getFullCachePath(), $this->getQuality(), $extension);
 
         return $this->getRelativeCachePath();

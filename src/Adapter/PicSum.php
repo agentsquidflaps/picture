@@ -2,9 +2,9 @@
 
 namespace Agentsquidflaps\Picture\Adapter;
 
-use Agentsquidflaps\Picture\AbstractSource;
+use Agentsquidflaps\Picture\Source;
 
-class PicSum extends AbstractSource
+class PicSum extends Source
 {
     private const SOURCE_URL = 'https://picsum.photos/';
 

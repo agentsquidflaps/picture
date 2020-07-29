@@ -2,13 +2,13 @@
 
 namespace Agentsquidflaps\Picture\Traits;
 
-use Agentsquidflaps\Picture\AbstractSource;
+use Agentsquidflaps\Picture\Source;
 
 /**
  * Trait SourceTrait
  * @package Agentsquidflaps\Picture\Traits
  */
-trait SourceTrait{
+trait isSource {
 	/**
 	 * @var int
 	 *
@@ -251,10 +251,10 @@ trait SourceTrait{
 	 * @return $this
 	 * @throws \Exception
 	 */
-	public function setTag(?string $tag = AbstractSource::TAG_SOURCE): self
+	public function setTag(?string $tag = Source::TAG_SOURCE): self
 	{
-		if (!in_array($tag, [AbstractSource::TAG_IMG, AbstractSource::TAG_SOURCE, '']))
-			throw new \Exception('Only ' . AbstractSource::TAG_SOURCE . ' and ' . AbstractSource::TAG_IMG . ' tags are allowed');
+		if (!in_array($tag, [Source::TAG_IMG, Source::TAG_SOURCE, '']))
+			throw new \Exception('Only ' . Source::TAG_SOURCE . ' and ' . Source::TAG_IMG . ' tags are allowed');
 		$this->tag = $tag;
 		return $this;
 	}
@@ -359,7 +359,7 @@ trait SourceTrait{
 
 	/**
 	 * @param int|string|null $quality
-	 * @return SourceTrait
+	 * @return isSource
 	 */
 	public function setQuality($quality)
 	{

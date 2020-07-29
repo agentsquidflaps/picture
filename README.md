@@ -32,16 +32,22 @@ Basic usage...
     
 It is highly recommended that you use some sort of abstraction layer. For example with Laravel you might...
 
-    $app->bind(AbstractSource::class, function() {
+    $app->bind(Source::class, function() {
         return new Intervention();
     })
     
 ...this way you can change images across the board or add defaults, like so...
 
-    $app->bind(AbstractSource::class, function() {
+    $app->bind(Source::class, function() {
         return (new Intervention())->setFormat('webp');
     })
     
+...then use it as follows...
+
+    new Picture([
+        $app->make(Source::class)->setSize(200, 200)
+    ])->setDescription('Your resized image') 
+
 ## Adapters
 
 Adapters are used to add flexibility. Depending on the location of your images. Dev specific adapters include...
@@ -52,3 +58,22 @@ Adapters are used to add flexibility. Depending on the location of your images. 
 
 For images found locally, (i.e. on a server) there's the Intervention adapter. There's also a Cloudfront adapter, but given
 the highly flexible nature of Cloudfront / S3 / Lambda image manipulators, this should just be used as an example.
+
+### Create your own adapter
+
+Create your own adapter by just extending `Source` and adding a `get` method to it.
+
+For example...
+
+    class TestSource extends Source
+    {
+    	/**
+    	 * @return string
+    	 */
+        public function get(): string
+        {
+            // Do something with the path
+            return $this->getPath();
+        }
+    }
+    

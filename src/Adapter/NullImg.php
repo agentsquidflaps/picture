@@ -2,14 +2,14 @@
 
 namespace Concrete\Package\Picture\Adapter\NullImg;
 
-use Agentsquidflaps\Picture\AbstractSource;
+use Agentsquidflaps\Picture\Source;
 
 /**
  * Class NullImg
  * Primarily for testing
  * @package Concrete\Package\Picture\Adapter\NullImg
  */
-class NullImg extends AbstractSource
+class NullImg extends Source
 {
 	/**
 	 * @return string
@@ -18,5 +18,4 @@ class NullImg extends AbstractSource
     {
         return $this->getPath();
     }
-
 }
