@@ -6,16 +6,16 @@ use function \sprintf;
 
 class MediaQuery
 {
-	const SIZE_SM = 576;
-	const SIZE_ME = 768;
-	const SIZE_LG = 992;
-	const SIZE_XL = 1200;
+	const SIZE_SM = 'sm';
+	const SIZE_ME = 'me';
+	const SIZE_LG = 'lg';
+	const SIZE_XL = 'xl';
 
 	const SIZES = [
-		'sm' => self::SIZE_SM,
-		'me' => self::SIZE_ME,
-		'lg' => self::SIZE_LG,
-		'xl' => self::SIZE_XL,
+		self::SIZE_SM => 576,
+		self::SIZE_ME => 768,
+		self::SIZE_LG => 992,
+		self::SIZE_XL => 1200,
 	];
 
 	/** @var string | null */
@@ -31,7 +31,7 @@ class MediaQuery
 	 * MediaQuery constructor.
 	 * @param array $sizes
 	 */
-	public function __construct(?array $sizes)
+	public function __construct(?array $sizes = null)
 	{
 		$this->sizes = $sizes ?: self::SIZES;
 	}
@@ -80,7 +80,7 @@ class MediaQuery
 		$markup = '';
 
 		if ($this->getMinWidth()) {
-			$markup .= sprintf('min-width: %spx', self::SIZES[$this->getMinWidth()]);
+			$markup .= sprintf('(min-width: %spx)', $this->sizes[$this->getMinWidth()]);
 		}
 
 		if ($this->getMaxWidth()) {
@@ -88,11 +88,7 @@ class MediaQuery
 				$markup .= ' and ';
 			}
 
-			$markup .= sprintf('max-width: %spx', self::SIZES[$this->getMaxWidth()] + 1);
-		}
-
-		if ($markup) {
-			$markup = '(' . $markup . ')';
+			$markup .= sprintf('(max-width: %spx)', $this->sizes[$this->getMaxWidth()] - 1);
 		}
 
 		return $markup;

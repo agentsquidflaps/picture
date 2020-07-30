@@ -43,11 +43,18 @@ class Cloudfront extends Source {
 		return getenv('CLOUDFRONT_URL') . '/' . $securityToken . '/' . $this->parsedPath() . '?' . http_build_query($params);
 	}
 
+	/**
+	 * @return string
+	 */
 	private function parsedPath()
 	{
 		return trim($this->getPath(), '/');
 	}
 
+	/**
+	 * @param array $params
+	 * @return string
+	 */
 	private function createSecurityToken(array $params)
 	{
 		$params['token'] = getenv('CLOUDFRONT_SECRET');
