@@ -2,10 +2,6 @@
 
 Picture - A PHP class for creating picture elements in a flexible way
 
-## Version:
-
-**0.0.1**
-
 ## Author:
 
 Tim Norris
@@ -76,4 +72,8 @@ For example...
             return $this->getPath();
         }
     }
-    
+
+### Lazyloading
+
+If you enable lazyloading, it assumes you have installed the npm package `lazysizes`. 
+To install just `npm i lazysizes`. More information can be found about lazysizes [here](https://www.npmjs.com/package/lazysizes).
