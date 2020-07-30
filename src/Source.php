@@ -85,44 +85,42 @@ abstract class Source implements AdapterInterface
 	{
 		$this->setDefaults();
 
-		$markup = $standardSrc = $webpSrc= '';
+		$markup = $standardSrc = $webpSrc = '';
 
 		if ($this->getPath()) {
-			if ($this->isExtensionAllowed($this->getExtension())) {
-				$standardSrc = $this->get();
+			$standardSrc = $this->get();
 
-				if ($this->webp) {
-					$webpImage = clone $this;
-					$webpSrc = $webpImage->setFormat(self::IMAGE_FORMAT_WEBP)->get();
+			if ($this->isWebp()) {
+				$webpImage = clone $this;
+				$webpSrc = $webpImage->setFormat(self::IMAGE_FORMAT_WEBP)->get();
+			}
+
+			// If no width or height is set, it'll just be half the size...
+			if ($this->isRetina() && ($this->getWidth() || $this->getHeight())) {
+				$retinaImage = clone $this;
+
+				if ($this->getWidth()) {
+					$retinaImage->setWidth($this->getWidth() * 2);
 				}
 
-				// If no width or height is set, it'll just be half the size...
-				if ($this->isRetina() && ($this->getWidth() || $this->getHeight())) {
-					$retinaImage = clone $this;
-
-					if ($this->getWidth()) {
-						$retinaImage->setWidth($this->getWidth() * 2);
-					}
-
-					if ($this->getHeight()) {
-						$retinaImage->setHeight($this->getHeight() * 2);
-					}
-
-					if ($this->webp) {
-						$retinaWebpImage = clone $retinaImage;
-						$webpSrc .= ' 1x, ' . $retinaWebpImage->setFormat(self::IMAGE_FORMAT_WEBP)->get() . ' 2x';
-					}
-
-					if ($this->tag === self::TAG_SOURCE) {
-						$standardSrc .= ' 1x, ' . $retinaImage->get() . ' 2x';
-					} else {
-						$markup .= $this->sourceMarkup($standardSrc . ' 1x, ' . $retinaImage->get() . ' 2x', $this->getExtension());
-					}
+				if ($this->getHeight()) {
+					$retinaImage->setHeight($this->getHeight() * 2);
 				}
 
-				if ($this->webp) {
-					$markup = $this->sourceMarkup($webpSrc, self::IMAGE_FORMAT_WEBP) . $markup;
+				if ($this->isWebp()) {
+					$retinaWebpImage = clone $retinaImage;
+					$webpSrc .= ' 1x, ' . $retinaWebpImage->setFormat(self::IMAGE_FORMAT_WEBP)->get() . ' 2x';
 				}
+
+				if ($this->tag === self::TAG_SOURCE) {
+					$standardSrc .= ' 1x, ' . $retinaImage->get() . ' 2x';
+				} else {
+					$markup .= $this->sourceMarkup($standardSrc . ' 1x, ' . $retinaImage->get() . ' 2x', $this->getExtension());
+				}
+			}
+
+			if ($this->isWebp()) {
+				$markup = $this->sourceMarkup($webpSrc, self::IMAGE_FORMAT_WEBP) . $markup;
 			}
 		}
 
@@ -177,10 +175,10 @@ abstract class Source implements AdapterInterface
 		if ($this->isLazyLoaded()) {
 			$class = $attributes['class'] ?? '';
 			$attributes = [
-				'src' => $this->getBaseImg(),
-				'data-src' => $src,
-				'class' => $class . ($class ? ' ' : '') . 'lazyload'
-			] + $attributes;
+					'src' => $this->getBaseImg(),
+					'data-src' => $src,
+					'class' => $class . ($class ? ' ' : '') . 'lazyload'
+				] + $attributes;
 		} else {
 			$attributes['src'] = $src;
 		}
@@ -194,7 +192,7 @@ abstract class Source implements AdapterInterface
 	 */
 	protected function getBaseImg()
 	{
-		return "data:image/svg+xml," . rawurlencode("<svg width='{$this->width}' height='{$this->height}' viewBox='0 0 {$this->width} {$this->height}' xmlns='http://www.w3.org/2000/svg'><rect x='0' y='0' width='{$this->width}' height='{$this->height}' rx='5' ry='5' fill='{$this->fill}' fill-opacity='{$this->fillAlpha}'/></svg>");
+		return "data:image/svg+xml," . rawurlencode("<svg width='{$this->getWidth()}' height='{$this->getHeight()}' viewBox='0 0 {$this->getWidth()} {$this->getHeight()}' xmlns='http://www.w3.org/2000/svg'><rect x='0' y='0' width='{$this->getWidth()}' height='{$this->getHeight()}' rx='5' ry='5' fill='{$this->getFill()}' fill-opacity='{$this->getFillAlpha()}'/></svg>");
 	}
 
 	/**
@@ -232,36 +230,23 @@ abstract class Source implements AdapterInterface
 		return $this->extension;
 	}
 
-	/**
-	 * @param string $extension
-	 * @return bool
-	 */
-	private function isExtensionAllowed(string $extension)
+	private function setDefaults()
 	{
-		return in_array($extension, [
-			'jpeg',
-			'jpg',
-			'webp',
-			'png'
-		]);
-	}
-
-	private function setDefaults() {
 		$this->setOptions(array_filter([
-			'fill' => $this->getFill(),
-			'fillAlpha' => $this->getFillAlpha(),
-			'tag' => $this->getTag(),
-			'lazyLoaded' => $this->isLazyLoaded(),
-			'retina' => $this->isRetina(),
-			'webp' => $this->isWebp()
-		]) + [
-			'fill' => '#000000',
-			'fillAlpha' => 0.1,
-			'tag' => self::TAG_SOURCE,
-			'lazyLoaded' => false,
-			'retina' => true,
-			'webp' => true
-		]);
+				'fill' => $this->getFill(),
+				'fillAlpha' => $this->getFillAlpha(),
+				'tag' => $this->getTag(),
+				'lazyLoaded' => $this->isLazyLoaded(),
+				'retina' => $this->isRetina(),
+				'webp' => $this->isWebp()
+			]) + [
+				'fill' => '#000000',
+				'fillAlpha' => 0.1,
+				'tag' => self::TAG_SOURCE,
+				'lazyLoaded' => false,
+				'retina' => true,
+				'webp' => true
+			]);
 
 		if ($this->isAjaxRequest()) {
 			$this->setLazyLoaded(false);
@@ -283,8 +268,8 @@ abstract class Source implements AdapterInterface
 		return false;
 	}
 
-    public function __toString()
-    {
-	    return $this->getMarkup();
-    }
+	public function __toString()
+	{
+		return $this->getMarkup();
+	}
 }
