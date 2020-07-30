@@ -1,13 +1,13 @@
 <?php
 
-namespace Concrete\Package\Picture\Adapter\NullImg;
+namespace Agentsquidflaps\Picture\Adapter\NullImg;
 
 use Agentsquidflaps\Picture\Source;
 
 /**
  * Class NullImg
  * Primarily for testing
- * @package Concrete\Package\Picture\Adapter\NullImg
+ * @package Agentsquidflaps\Picture\Adapter\NullImg
  */
 class NullImg extends Source
 {

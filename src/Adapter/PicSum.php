@@ -13,7 +13,16 @@ class PicSum extends Source
 	 */
     public function get(): string
     {
-        return self::SOURCE_URL."{$this->getWidth()}/{$this->getHeight()}?random";
+        return $this->getPath();
     }
 
+    public function getPath(): ?string
+    {
+	    return self::SOURCE_URL."{$this->getWidth()}/{$this->getHeight()}?random";
+    }
+
+    public function isWebp(): ?bool
+    {
+    	return false;
+    }
 }

@@ -19,7 +19,7 @@ class Intervention extends Source
 	 */
     public function get(): string
     {
-        $extension = $this->isWebp() ? 'webp' : $this->getFormat();
+        $extension = $this->getFormat() ?: $this->getExtension();
 
         if (file_exists($this->getFullCachePath())) {
             return $this->getRelativeCachePath();
@@ -40,10 +40,23 @@ class Intervention extends Source
         }
 
         $imageManager
-	        ->make($this->getPath())
-            ->fit($this->getWidth(), $this->getHeight(), $callbackFunction, $this->getFit() ? Source::POSITIONS[$this->getFit()] : 'center')
+	        ->make($this->getFullPath())
+            ->fit(
+            	$this->getWidth(),
+	            $this->getHeight(),
+	            $callbackFunction,
+	            $this->getFit() ? Source::POSITIONS[$this->getFit()] : 'center'
+            )
             ->save($this->getFullCachePath(), $this->getQuality(), $extension);
 
         return $this->getRelativeCachePath();
+    }
+
+	/**
+	 * @return string
+	 */
+	private function getFullPath()
+	{
+		return getenv('PICTURE_WEB_ROOT') . '/' . trim($this->getPath(), '/');
     }
 }
