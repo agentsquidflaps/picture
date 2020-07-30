@@ -12,10 +12,10 @@ Tim Norris
 
 ## Requirements:
 
-* PHP 7.2 or greater
+* PHP 7.1 or greater
 * GD
 * Imagick
-* Symfony HTTP foundation 3 or greater
+* Symfony HTTP foundation 2 or greater
 * Intervention image 2.5.1 or greater
 
 ## Install:
