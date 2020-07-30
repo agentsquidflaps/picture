@@ -1,6 +1,6 @@
 {
     "name": "agentsquidflaps/picture",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "description": "Create flexible picture elements",
     "keywords": ["picture", "image", "optimizer", "manipulator"],
     "homepage": "https://github.com/agentsquidflaps/picture",
@@ -12,7 +12,7 @@
     ],
     "require": {
         "php": ">=7.1",
-        "symfony/http-foundation": ">=3.0",
+        "symfony/http-foundation": ">=2.0",
         "intervention/image": ">=2.5.1",
         "ext-gd": "*",
         "ext-imagick":"*"
