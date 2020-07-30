@@ -222,7 +222,7 @@ abstract class Source implements AdapterInterface
 	protected function getExtension()
 	{
 		if ($this->extension === null) {
-			preg_match('/(?:.*)\.(.+)$/', $this->getPath(), $matches);
+			preg_match('/\.((?!.*\.)[\w]+)/', $this->getPath(), $matches);
 
 			$this->extension = $matches[1] ?? '';
 		}
