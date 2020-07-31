@@ -83,9 +83,13 @@ class Picture
 
 	private function setParameter(Source $source, string $parameter, string $getterPrefix = 'get')
 	{
-		$parsedParameter = ucfirst($parameter);
-		if ($this->$parameter && call_user_func([$source, $getterPrefix . $parsedParameter]) === null) {
-			call_user_func([$source, 'set' . ucfirst($parameter)], $this->$parameter);
+		if ($this->$parameter) {
+			$parsedParameter = ucfirst($parameter);
+			$sourceGetterResult = call_user_func([$source, $getterPrefix . $parsedParameter]);
+
+			if ($sourceGetterResult !== null || $sourceGetterResult !== '') {
+				call_user_func([$source, 'set' . ucfirst($parameter)], $this->$parameter);
+			}
 		}
     }
 
