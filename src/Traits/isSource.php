@@ -85,7 +85,7 @@ trait isSource {
 	/**
 	 * @return string|null
 	 */
-	public function getPath(): ?string
+	public function getPath()
 	{
 		return $this->path;
 	}
@@ -94,7 +94,7 @@ trait isSource {
 	 * @param string|null $path
 	 * @return self
 	 */
-	public function setPath(?string $path): self
+	public function setPath($path = ''): self
 	{
 		$this->path = $path;
 		return $this;
@@ -103,16 +103,16 @@ trait isSource {
 	/**
 	 * @return int|null
 	 */
-	public function getWidth(): ?int
+	public function getWidth()
 	{
 		return $this->width;
 	}
 
 	/**
-	 * @param int|null $width
+	 * @param int $width
 	 * @return self
 	 */
-	public function setWidth(?int $width): self
+	public function setWidth($width): self
 	{
 		$this->width = $width;
 		return $this;
@@ -121,7 +121,7 @@ trait isSource {
 	/**
 	 * @return int|null
 	 */
-	public function getHeight(): ?int
+	public function getHeight()
 	{
 		return $this->height;
 	}
@@ -130,15 +130,15 @@ trait isSource {
 	 * @param int|null $height
 	 * @return self
 	 */
-	public function setHeight(?int $height): self
+	public function setHeight($height): self
 	{
 		$this->height = $height;
 		return $this;
 	}
 
 	/**
-	 * @param $width
-	 * @param $height
+	 * @param int $width
+	 * @param int $height
 	 * @return $this
 	 */
 	public function setSize($width, $height): self
@@ -151,16 +151,16 @@ trait isSource {
 	/**
 	 * @return array
 	 */
-	public function getAttributes(): array
+	public function getAttributes()
 	{
 		return $this->attributes;
 	}
 
 	/**
-	 * @param array | null $attributes
+	 * @param array $attributes
 	 * @return self
 	 */
-	public function setAttributes(?array $attributes): self
+	public function setAttributes($attributes = []): self
 	{
 		$this->attributes = $attributes;
 		return $this;
@@ -169,16 +169,16 @@ trait isSource {
 	/**
 	 * @return string | null
 	 */
-	public function getDescription(): ?string
+	public function getDescription()
 	{
 		return $this->description;
 	}
 
 	/**
-	 * @param string| null $description
+	 * @param string $description
 	 * @return self
 	 */
-	public function setDescription(?string $description): self
+	public function setDescription($description = ''): self
 	{
 		$this->description = $description;
 		return $this;
@@ -187,16 +187,16 @@ trait isSource {
 	/**
 	 * @return bool | null
 	 */
-	public function isLazyLoaded(): ?bool
+	public function isLazyLoaded()
 	{
 		return $this->lazyLoaded;
 	}
 
 	/**
-	 * @param bool | null $lazyLoaded
+	 * @param bool $lazyLoaded
 	 * @return self
 	 */
-	public function setLazyLoaded(?bool $lazyLoaded): self
+	public function setLazyLoaded($lazyLoaded = true): self
 	{
 		$this->lazyLoaded = $lazyLoaded;
 		return $this;
@@ -205,16 +205,16 @@ trait isSource {
 	/**
 	 * @return bool | null
 	 */
-	public function isRetina(): ?bool
+	public function isRetina()
 	{
 		return $this->retina;
 	}
 
 	/**
-	 * @param bool | null $retina
+	 * @param bool $retina
 	 * @return self
 	 */
-	public function setRetina(?bool $retina): self
+	public function setRetina($retina = true): self
 	{
 		$this->retina = $retina;
 		return $this;
@@ -223,16 +223,16 @@ trait isSource {
 	/**
 	 * @return bool | null
 	 */
-	public function isWebp(): ?bool
+	public function isWebp()
 	{
 		return $this->webp;
 	}
 
 	/**
-	 * @param bool | null $webp
+	 * @param bool $webp
 	 * @return self
 	 */
-	public function setWebp(?bool $webp): self
+	public function setWebp($webp = true): self
 	{
 		$this->webp = $webp;
 		return $this;
@@ -241,17 +241,17 @@ trait isSource {
 	/**
 	 * @return string | null
 	 */
-	public function getTag(): ?string
+	public function getTag()
 	{
 		return $this->tag;
 	}
 
 	/**
-	 * @param string | null $tag
+	 * @param string $tag
 	 * @return $this
 	 * @throws \Exception
 	 */
-	public function setTag(?string $tag = Source::TAG_SOURCE): self
+	public function setTag($tag = Source::TAG_SOURCE): self
 	{
 		if (!in_array($tag, [Source::TAG_IMG, Source::TAG_SOURCE, '']))
 			throw new \Exception('Only ' . Source::TAG_SOURCE . ' and ' . Source::TAG_IMG . ' tags are allowed');
@@ -262,16 +262,18 @@ trait isSource {
 	/**
 	 * @return string | null
 	 */
-	public function getFill(): ?string
+	public function getFill()
 	{
 		return $this->fill;
 	}
 
 	/**
-	 * @param string | null $fill
+	 * @param string $fill
 	 * @return self
+	 *
+	 * The hex colour of the pre-image when lazyloading
 	 */
-	public function setFill(?string $fill): self
+	public function setFill($fill = ''): self
 	{
 		$this->fill = $fill;
 		return $this;
@@ -279,17 +281,19 @@ trait isSource {
 
 	/**
 	 * @return string | null
+	 *
+	 * The pre-image alpha when lazyloading
 	 */
-	public function getFillAlpha(): ?string
+	public function getFillAlpha()
 	{
 		return $this->fillAlpha;
 	}
 
 	/**
-	 * @param string | null $fillAlpha
+	 * @param string $fillAlpha
 	 * @return self
 	 */
-	public function setFillAlpha(?string $fillAlpha): self
+	public function setFillAlpha($fillAlpha = ''): self
 	{
 		$this->fillAlpha = $fillAlpha;
 		return $this;
@@ -298,16 +302,16 @@ trait isSource {
 	/**
 	 * @return string|null
 	 */
-	public function getFit(): ?string
+	public function getFit()
 	{
 		return $this->fit;
 	}
 
 	/**
-	 * @param string|null $fit
+	 * @param string $fit
 	 * @return self
 	 */
-	public function setFit(?string $fit): self
+	public function setFit($fit = ''): self
 	{
 		$this->fit = $fit;
 		return $this;
@@ -316,16 +320,16 @@ trait isSource {
 	/**
 	 * @return string|null
 	 */
-	public function getPosition(): ?string
+	public function getPosition()
 	{
 		return $this->position;
 	}
 
 	/**
-	 * @param string|null $position
+	 * @param string $position
 	 * @return self
 	 */
-	public function setPosition(?string $position): self
+	public function setPosition($position = ''): self
 	{
 		$this->position = $position;
 		return $this;
@@ -334,16 +338,16 @@ trait isSource {
 	/**
 	 * @return string|null
 	 */
-	public function getFormat(): ?string
+	public function getFormat()
 	{
 		return $this->format;
 	}
 
 	/**
-	 * @param string|null $format
+	 * @param string $format
 	 * @return $this
 	 */
-	public function setFormat(?string $format): self
+	public function setFormat($format = Source::IMAGE_FORMAT_JPG): self
 	{
 		$this->format = $format;
 		return $this;
@@ -352,16 +356,16 @@ trait isSource {
 	/**
 	 * @return int|string|null
 	 */
-	public function getQuality(): ?string
+	public function getQuality()
 	{
 		return $this->quality;
 	}
 
 	/**
-	 * @param int|string|null $quality
-	 * @return isSource
+	 * @param int|string $quality
+	 * @return $this
 	 */
-	public function setQuality($quality)
+	public function setQuality($quality = 80)
 	{
 		$this->quality = $quality;
 		return $this;
@@ -370,8 +374,10 @@ trait isSource {
 	/**
 	 * @param array $options
 	 * @return $this
+	 *
+	 * Set options as an array. Key values are the snake case version of the relevant method, sans the set prefix
 	 */
-	public function setOptions(array $options)
+	public function setOptions($options = []): self
 	{
 		array_map(function ($key, $value) {
 			$functionName = 'set' . ucfirst($key);

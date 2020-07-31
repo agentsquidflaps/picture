@@ -48,6 +48,17 @@ abstract class Source implements AdapterInterface
 	const IMAGE_FORMAT_WEBP = 'webp';
 	const IMAGE_FORMAT_PNG = 'png';
 
+	/** @var string Preserving aspect ratio, ensure the image covers both provided dimensions by cropping/clipping to fit. */
+	const FIT_COVER = 'cover'; // resize w/aspect ratio
+	/** @var string Preserving aspect ratio, contain within both provided dimensions using "letterboxing" where necessary. */
+	const FIT_CONTAIN = 'contain'; // fit
+	/** @var string Ignore the aspect ratio of the input and stretch to both provided dimensions. */
+	const FIT_FILL = 'fill'; // resize w/upsizing
+	/** @var string Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified. */
+	const FIT_INSIDE = 'inside';
+	/** @var string Preserving aspect ratio, resize the image to be as small as possible while ensuring its dimensions are greater than or equal to both those specified. */
+	const FIT_OUTSIDE = 'outside';
+
 	const TAG_IMG = 'img';
 	const TAG_SOURCE = 'source';
 
@@ -63,7 +74,7 @@ abstract class Source implements AdapterInterface
 	/**
 	 * @return MediaQuery|null
 	 */
-	public function getMediaQuery(): ?MediaQuery
+	public function getMediaQuery()
 	{
 		return $this->mediaQuery;
 	}
@@ -72,7 +83,7 @@ abstract class Source implements AdapterInterface
 	 * @param MediaQuery|null $mediaQuery
 	 * @return self
 	 */
-	public function setMediaQuery(?MediaQuery $mediaQuery): self
+	public function setMediaQuery(MediaQuery $mediaQuery): self
 	{
 		$this->mediaQuery = $mediaQuery;
 		return $this;

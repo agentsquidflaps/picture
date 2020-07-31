@@ -31,15 +31,15 @@ class MediaQuery
 	 * MediaQuery constructor.
 	 * @param array $sizes
 	 */
-	public function __construct(?array $sizes = null)
+	public function __construct(array $sizes = [])
 	{
-		$this->sizes = $sizes ?: self::SIZES;
+		$this->sizes = count($sizes) ? $sizes : self::SIZES;
 	}
 
 	/**
 	 * @return string|null
 	 */
-	public function getMinWidth(): ?string
+	public function getMinWidth()
 	{
 		return $this->minWidth;
 	}
@@ -48,7 +48,7 @@ class MediaQuery
 	 * @param string|null $minWidth
 	 * @return MediaQuery
 	 */
-	public function setMinWidth(?string $minWidth): MediaQuery
+	public function setMinWidth(string $minWidth = ''): MediaQuery
 	{
 		$this->minWidth = $minWidth;
 		return $this;
@@ -57,7 +57,7 @@ class MediaQuery
 	/**
 	 * @return string|null
 	 */
-	public function getMaxWidth(): ?string
+	public function getMaxWidth()
 	{
 		return $this->maxWidth;
 	}
@@ -66,7 +66,7 @@ class MediaQuery
 	 * @param string|null $maxWidth
 	 * @return MediaQuery
 	 */
-	public function setMaxWidth(?string $maxWidth): MediaQuery
+	public function setMaxWidth(string $maxWidth = ''): MediaQuery
 	{
 		$this->maxWidth = $maxWidth;
 		return $this;

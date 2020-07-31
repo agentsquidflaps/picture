@@ -13,7 +13,7 @@ trait isLocal
 	 */
 	protected function getFullCachePath()
 	{
-		return getenv('PICTURE_WEB_ROOT') . '/' . $this->getRelativeCachePath();
+		return getenv('PICTURE_WEB_ROOT') . $this->getRelativeCachePath();
 	}
 
 	/**

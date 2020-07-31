@@ -17,40 +17,39 @@ class Intervention extends Source
 	/**
 	 * @return string
 	 */
-    public function get(): string
-    {
-        $extension = $this->getFormat() ?: $this->getExtension();
+	public function get(): string
+	{
+		$extension = $this->getFormat() ?: $this->getExtension();
 
-        if (file_exists($this->getFullCachePath())) {
-            return $this->getRelativeCachePath();
-        }
+		if (file_exists($this->getFullCachePath())) {
+			return $this->getRelativeCachePath();
+		}
 
-        if ($this->isWebp()) {
-            $imageManager = ImageManagerStatic::configure(['driver' => 'gd']);
-        } else {
-            $imageManager = ImageManagerStatic::configure(['driver' => 'imagick']);
-        }
+		if ($this->isWebp()) {
+			$imageManager = ImageManagerStatic::configure(['driver' => 'gd']);
+		} else {
+			$imageManager = ImageManagerStatic::configure(['driver' => 'imagick']);
+		}
 
-        $callbackFunction = null;
+		$image = $imageManager->make($this->getFullPath());
+		$callbackFunction = null;
 
-        if (!$this->getWidth() || !$this->getHeight()) {
-        	$callbackFunction = function ($constrait) {
-        		return $constrait->aspectRatio();
-	        };
-        }
+		if ($this->getFit() === Source::FIT_CONTAIN) {
+			$image->fit($this->getWidth(), $this->getHeight(), null, $this->getPosition() ? Source::POSITIONS[$this->getPosition()] : 'center');
+		} else {
+			$image->resize($this->getWidth(), $this->getHeight(), function ($constraint) {
+				$constraint->aspectRatio();
 
-        $imageManager
-	        ->make($this->getFullPath())
-            ->fit(
-            	$this->getWidth(),
-	            $this->getHeight(),
-	            $callbackFunction,
-	            $this->getFit() ? Source::POSITIONS[$this->getFit()] : 'center'
-            )
-            ->save($this->getFullCachePath(), $this->getQuality(), $extension);
+				if ($this->getFit() === Source::FIT_FILL) {
+					$constraint->upsize();
+				}
+			});
+		}
 
-        return $this->getRelativeCachePath();
-    }
+		$image->save($this->getFullCachePath(), $this->getQuality(), $extension);
+
+		return $this->getRelativeCachePath();
+	}
 
 	/**
 	 * @return string
@@ -58,5 +57,5 @@ class Intervention extends Source
 	private function getFullPath()
 	{
 		return getenv('PICTURE_WEB_ROOT') . '/' . trim($this->getPath(), '/');
-    }
+	}
 }
