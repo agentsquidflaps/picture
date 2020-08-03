@@ -21,6 +21,11 @@
         "phpunit/phpunit": "^5.0 || ^4.8"
     },
     "autoload": {
-        "psr-4": { "Agentsquidflaps\\Picture\\": "src/" }
+        "files": [
+            "helpers.php"
+        ],
+        "psr-4": {
+            "Agentsquidflaps\\Picture\\": "src/"
+        }
     }
 }
