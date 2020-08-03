@@ -40,3 +40,13 @@ It is highly recommended that you use some sort of abstraction layer. For exampl
     new Picture([
         $app->make(Source::class)->setSize(200, 200)
     ])->setDescription('Your resized image') 
+
+### Laravel functions
+
+For those that are using Laravel packages, that is anyone that can
+call the `app()` function globally, there are helper methods to ease with the above.
+They are `picture()` and `source()`. Which can be used as follows...
+
+    picture([
+        source()->setPath('path to image')
+    ])->setDescription('img description')
