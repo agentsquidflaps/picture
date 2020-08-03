@@ -1,6 +1,6 @@
 {
     "name": "agentsquidflaps/picture",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Create flexible picture elements",
     "keywords": ["picture", "image", "optimizer", "manipulator"],
     "homepage": "https://github.com/agentsquidflaps/picture",
@@ -21,6 +21,11 @@
         "phpunit/phpunit": "^5.0 || ^4.8"
     },
     "autoload": {
-        "psr-4": { "Agentsquidflaps\\Picture\\": "src/" }
+        "files": [
+            "helpers.php"
+        ],
+        "psr-4": {
+            "Agentsquidflaps\\Picture\\": "src/"
+        }
     }
 }

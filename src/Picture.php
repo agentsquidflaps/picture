@@ -21,13 +21,11 @@ class Picture
      * Picture constructor.
      * @param array $sources
      * @param string $description
-     * @param array $attributes
      */
-    public function __construct(array $sources, string $description = '', array $attributes = [])
+    public function __construct($sources = [], $description = '')
     {
-        $this->sources = $sources;
-        $this->description = $description;
-        $this->attributes = $attributes;
+        $this->setSources($sources);
+        $this->setDescription($description);
     }
 
 	/**
@@ -92,6 +90,34 @@ class Picture
 			}
 		}
     }
+
+	/**
+	 * @return Source[]|array
+	 */
+	public function getSources()
+	{
+		return $this->sources;
+	}
+
+	/**
+	 * @param Source[]|array $sources
+	 * @return Picture
+	 */
+	public function setSources($sources)
+	{
+		$this->sources = $sources;
+		return $this;
+	}
+
+	/**
+	 * @param $source
+	 * @return $this
+	 */
+	public function addSource($source)
+	{
+		$this->sources[] = $source;
+		return $this;
+	}
 
     /**
      * @return string
