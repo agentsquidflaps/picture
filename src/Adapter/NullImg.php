@@ -1,6 +1,6 @@
 <?php
 
-namespace Agentsquidflaps\Picture\Adapter\NullImg;
+namespace Agentsquidflaps\Picture\Adapter;
 
 use Agentsquidflaps\Picture\Source;
 
