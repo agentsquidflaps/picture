@@ -40,7 +40,7 @@ class Intervention extends Source
 			$image->resize($this->getWidth(), $this->getHeight(), function ($constraint) {
 				$constraint->aspectRatio();
 
-				if ($this->getFit() === Source::FIT_FILL) {
+				if ($this->getFit() !== Source::FIT_FILL) {
 					$constraint->upsize();
 				}
 			});
