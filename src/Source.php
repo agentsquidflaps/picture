@@ -3,6 +3,7 @@
 namespace Agentsquidflaps\Picture;
 
 use Agentsquidflaps\Picture\Adapter\AdapterInterface;
+use Agentsquidflaps\Picture\Traits\ChecksForSetValues;
 use Agentsquidflaps\Picture\Traits\RequiresAttributeMarkup;
 use Agentsquidflaps\Picture\Traits\isSource;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,6 +69,7 @@ abstract class Source implements AdapterInterface
 	/** @var string | null */
 	private $extension = null;
 
+	use ChecksForSetValues;
 	use RequiresAttributeMarkup;
 	use isSource;
 
@@ -243,14 +245,7 @@ abstract class Source implements AdapterInterface
 
 	private function setDefaults()
 	{
-		$this->setOptions(array_filter([
-				'fill' => $this->getFill(),
-				'fillAlpha' => $this->getFillAlpha(),
-				'tag' => $this->getTag(),
-				'lazyLoaded' => $this->isLazyLoaded(),
-				'retina' => $this->isRetina(),
-				'webp' => $this->isWebp()
-			]) + [
+		$this->setOptions($this->getSelectedDefaults() + [
 				'fill' => '#000000',
 				'fillAlpha' => 0.1,
 				'tag' => self::TAG_SOURCE,
@@ -262,6 +257,21 @@ abstract class Source implements AdapterInterface
 		if ($this->isAjaxRequest()) {
 			$this->setLazyLoaded(false);
 		}
+	}
+
+	/**
+	 * @return array
+	 */
+	private function getSelectedDefaults()
+	{
+		return array_filter([
+			'fill' => $this->getFill(),
+			'fillAlpha' => $this->getFillAlpha(),
+			'tag' => $this->getTag(),
+			'lazyLoaded' => $this->isLazyLoaded(),
+			'retina' => $this->isRetina(),
+			'webp' => $this->isWebp()
+		], [$this, 'valueIsSet']);
 	}
 
 	/**
