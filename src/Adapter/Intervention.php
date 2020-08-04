@@ -25,14 +25,8 @@ class Intervention extends Source
 			return $this->getRelativeCachePath();
 		}
 
-		if ($this->isWebp()) {
-			$imageManager = ImageManagerStatic::configure(['driver' => 'gd']);
-		} else {
-			$imageManager = ImageManagerStatic::configure(['driver' => 'imagick']);
-		}
-
+		$imageManager = ImageManagerStatic::configure(['driver' => 'gd']);
 		$image = $imageManager->make($this->getFullPath());
-		$callbackFunction = null;
 
 		if ($this->getFit() === Source::FIT_CONTAIN) {
 			$image->fit($this->getWidth(), $this->getHeight(), null, $this->getPosition() ? Source::POSITIONS[$this->getPosition()] : 'center');
