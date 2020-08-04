@@ -2,6 +2,7 @@
 
 namespace Agentsquidflaps\Picture;
 
+use Agentsquidflaps\Picture\Traits\ChecksForSetValues;
 use Agentsquidflaps\Picture\Traits\RequiresAttributeMarkup;
 use Agentsquidflaps\Picture\Traits\isSource;
 
@@ -14,6 +15,7 @@ class Picture
     /** @var Source[]|array */
     private $sources;
 
+    use ChecksForSetValues;
     use RequiresAttributeMarkup;
     use isSource;
 
@@ -81,11 +83,11 @@ class Picture
 
 	private function setParameter(Source $source, string $parameter, string $getterPrefix = 'get')
 	{
-		if ($this->$parameter) {
+		if ($this->valueIsSet($this->$parameter)) {
 			$parsedParameter = ucfirst($parameter);
 			$sourceGetterResult = call_user_func([$source, $getterPrefix . $parsedParameter]);
 
-			if ($sourceGetterResult !== null || $sourceGetterResult !== '') {
+			if (!$this->valueIsSet($sourceGetterResult)) {
 				call_user_func([$source, 'set' . ucfirst($parameter)], $this->$parameter);
 			}
 		}
