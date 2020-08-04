@@ -41,6 +41,6 @@ trait isLocal
 			self::class
 		];
 
-		return md5(serialize($attributes)) . '.' . $this->getExtension();
+		return md5(serialize($attributes)) . '.' . ($this->getFormat() ?: $this->getExtension());
 	}
 }
