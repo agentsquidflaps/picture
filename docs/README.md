@@ -8,7 +8,6 @@
 
 * PHP 7.0 or greater
 * GD
-* Imagick
 * Symfony HTTP foundation 2 or greater
 * Intervention image 2.5.1 or greater
 
