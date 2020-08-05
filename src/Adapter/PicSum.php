@@ -4,24 +4,34 @@ namespace Agentsquidflaps\Picture\Adapter;
 
 use Agentsquidflaps\Picture\Source;
 
+/**
+ * Class PicSum
+ * @package Agentsquidflaps\Picture\Adapter
+ */
 class PicSum extends Source
 {
-    private const SOURCE_URL = 'https://picsum.photos/';
+    const SOURCE_URL = 'https://picsum.photos/';
 
 	/**
 	 * @return string
 	 */
-    public function get(): string
+    public function get()
     {
         return $this->getPath();
     }
 
-    public function getPath(): ?string
+	/**
+	 * @return string
+	 */
+    public function getPath()
     {
 	    return self::SOURCE_URL."{$this->getWidth()}/{$this->getHeight()}?random";
     }
 
-    public function isWebp(): ?bool
+	/**
+	 * @return bool
+	 */
+    public function isWebp()
     {
     	return false;
     }

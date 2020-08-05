@@ -4,16 +4,20 @@ namespace Agentsquidflaps\Picture;
 
 use function \sprintf;
 
+/**
+ * Class MediaQuery
+ * @package Agentsquidflaps\Picture
+ */
 class MediaQuery
 {
 	const SIZE_SM = 'sm';
-	const SIZE_ME = 'me';
+	const SIZE_MD = 'md';
 	const SIZE_LG = 'lg';
 	const SIZE_XL = 'xl';
 
 	const SIZES = [
 		self::SIZE_SM => 576,
-		self::SIZE_ME => 768,
+		self::SIZE_MD => 768,
 		self::SIZE_LG => 992,
 		self::SIZE_XL => 1200,
 	];
