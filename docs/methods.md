@@ -8,7 +8,7 @@ For example...
 
 ### getVersion()
 
-Default: 1
+`Default: 1`
 
 Returns the version of a source. Used primarily for systems where files can have versions or cache busting.
 
@@ -67,6 +67,8 @@ Set the alt description of source
 
 ### isLazyLoaded()
 
+`Default: false`
+
 Tells you if a source is intended to be lazy loaded
 
 ### setLazyLoaded(bool $lazyLoaded)
@@ -75,6 +77,8 @@ Set source to be lazy loaded or not
 
 ### isRetina()
 
+`Default: true`
+
 Tells you if a retina source will be created
 
 ### setRetina(bool $retina)
@@ -82,6 +86,8 @@ Tells you if a retina source will be created
 Set retina source to be created or not
 
 ### isWebp()
+
+`Default: true`
 
 Tells you if a webp source will be created
 
@@ -176,6 +182,8 @@ Get the format of the source
 Set the format of the source. For example, 'jpg' or 'png'
 
 ### getQuality()
+
+`Default: 80`
 
 Get the quality of the source
 
