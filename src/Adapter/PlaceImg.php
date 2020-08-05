@@ -4,25 +4,35 @@ namespace Agentsquidflaps\Picture\Adapter;
 
 use Agentsquidflaps\Picture\Source;
 
+/**
+ * Class PlaceImg
+ * @package Agentsquidflaps\Picture\Adapter
+ */
 class PlaceImg extends Source
 {
 
-    private const SOURCE_URL = 'https://placeimg.com/';
+    const SOURCE_URL = 'https://placeimg.com/';
 
 	/**
 	 * @return string
 	 */
-    public function get(): string
+    public function get()
     {
     	return $this->getPath();
     }
 
-    public function getPath(): ?string
+	/**
+	 * @return string
+	 */
+    public function getPath()
     {
         return self::SOURCE_URL."{$this->getWidth()}/{$this->getHeight()}";
     }
 
-    public function isWebp(): ?bool
+	/**
+	 * @return bool
+	 */
+    public function isWebp()
     {
     	return false;
     }

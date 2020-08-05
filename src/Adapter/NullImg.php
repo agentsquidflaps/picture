@@ -14,7 +14,7 @@ class NullImg extends Source
 	/**
 	 * @return string
 	 */
-    public function get(): string
+    public function get()
     {
         return $this->getPath();
     }
