@@ -3,13 +3,17 @@
 ## Install
     
     composer install agentsquidflaps/picture
-    
+
 ## Requirements
 
 * PHP 7.0 or greater
 * GD
 * Symfony HTTP foundation 2 or greater
 * Intervention image 2.5.1 or greater
+
+### Documentation
+
+Please see below for basic usage or you can go to [https://agentsquidflaps.github.io/picture/#/](https://agentsquidflaps.github.io/picture/#/) for more information.
 
 ## Usage
 
@@ -78,7 +82,7 @@ The variables you need to set are...
     
 #### GD Library
 
-ALthough, WebP does work on GD library on versions lower than 2.3
+Although, WebP does work on GD library on versions lower than 2.3
 (assuming WebP is enabled), it can produce odd results. So it's recommended
 you use 2.3 or above for best results. GD library 2.3 is available
 from Ubuntu 18 and up. 
@@ -111,7 +115,7 @@ It is highly recommended that you use some sort of abstraction layer. For exampl
 
 For those that are using Laravel packages, that is anyone that can
 call the `app()` function globally, there are helper methods to ease with the above.
-They are `picture()`, `source()` and `mediaQuery`. Which can be used as follows...
+They are `picture()`, `source()` and `mediaQuery()`. Which can be used as follows...
 
     picture([
         source()->setPath('path to image')->setMediaQuery(mediaQuery()->setMinWidth('sm'))
