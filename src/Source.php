@@ -209,7 +209,11 @@ abstract class Source implements AdapterInterface
      */
     protected function getBaseImg()
     {
-        return "data:image/svg+xml," . rawurlencode("<svg width='{$this->getWidth()}' height='{$this->getHeight()}' viewBox='0 0 {$this->getWidth()} {$this->getHeight()}' xmlns='http://www.w3.org/2000/svg'><rect x='0' y='0' width='{$this->getWidth()}' height='{$this->getHeight()}' rx='5' ry='5' fill='{$this->getFill()}' fill-opacity='{$this->getFillAlpha()}'/></svg>");
+        $width = $this->getWidth() ?: '100%';
+        $height = $this->getHeight() ?: '100%';
+        $svgString = "<svg width='%s' height='%s' xmlns='http://www.w3.org/2000/svg'><rect x='0' y='0' width='%s' height='%s' rx='5' ry='5' fill='%s' fill-opacity='%s'/></svg>";
+        $replacedSvgString = sprintf($svgString, $width, $height, $width, $height, $this->getFill(), $this->getFillAlpha());
+        return "data:image/svg+xml," . rawurlencode($replacedSvgString);
     }
 
     /**
@@ -217,20 +221,11 @@ abstract class Source implements AdapterInterface
      */
     private function type($format)
     {
-        if (!$this->path) {
+        if (!$this->getPath()) {
             return '';
         }
 
-        switch ($format) {
-            case 'webp':
-                return 'image/webp';
-                break;
-            case 'png':
-                return 'image/png';
-                break;
-            default:
-                return 'image/jpeg';
-        }
+        return ImageMimeType::getMimeTypeFromExtension($format);
     }
 
     /**
