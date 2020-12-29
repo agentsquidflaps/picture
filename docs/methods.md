@@ -214,4 +214,4 @@ Sets the media query object of a source. Currently only supported on the `Source
 ### isSupported()
 
 Determines whether the image manipulator can/should manipulate images. If the 
-method returns true, it's supported, otherwise false and then just the original path will be output
+method returns true, it's supported, otherwise false and then just the original path will be output.
