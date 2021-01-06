@@ -64,6 +64,9 @@ trait isSource {
 	/** @var string | int */
 	protected $quality = 80;
 
+	/** @var float[] | array */
+	protected $retinaSizes = [2];
+
 	/**
 	 * @return int
 	 */
@@ -365,11 +368,29 @@ trait isSource {
 	 * @param int|string $quality
 	 * @return $this
 	 */
-	public function setQuality($quality = 80)
+	public function setQuality($quality = 80): self
 	{
 		$this->quality = $quality;
 		return $this;
 	}
+
+    /**
+     * @return array|float[]
+     */
+    public function getRetinaSizes()
+    {
+        return $this->retinaSizes;
+    }
+
+    /**
+     * @param array|float[] $retinaSizes
+     * @return $this
+     */
+    public function setRetinaSizes(array $retinaSizes): self
+    {
+        $this->retinaSizes = $retinaSizes;
+        return $this;
+    }
 
 	/**
 	 * @param array $options

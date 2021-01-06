@@ -99,7 +99,7 @@ abstract class Source implements AdapterInterface
         $this->setDefaults();
 
         if ($this->isSupported()) {
-            $markup = $standardSrc = $webpSrc = '';
+            $markup = $standardSrc = $retinaStandardSrc = $webpSrc = '';
 
             if ($this->getPath()) {
                 $standardSrc = $this->get();
@@ -111,25 +111,33 @@ abstract class Source implements AdapterInterface
 
                 // If no width or height is set, it'll just be half the size...
                 if ($this->isRetina() && ($this->getWidth() || $this->getHeight())) {
-                    $retinaImage = clone $this;
-
-                    if ($this->getWidth()) {
-                        $retinaImage->setWidth($this->getWidth() * 2);
-                    }
-
-                    if ($this->getHeight()) {
-                        $retinaImage->setHeight($this->getHeight() * 2);
-                    }
+                    $retinaStandardSrc = $standardSrc . ' 1x';
 
                     if ($this->isWebp()) {
-                        $retinaWebpImage = clone $retinaImage;
-                        $webpSrc .= ' 1x, ' . $retinaWebpImage->setFormat(self::IMAGE_FORMAT_WEBP)->get() . ' 2x';
+                        $webpSrc .= ' 1x';
                     }
 
-                    if ($this->tag === self::TAG_SOURCE) {
-                        $standardSrc .= ' 1x, ' . $retinaImage->get() . ' 2x';
-                    } else {
-                        $markup .= $this->sourceMarkup($standardSrc . ' 1x, ' . $retinaImage->get() . ' 2x', $this->getExtension());
+                    foreach ($this->getRetinaSizes() as $retinaSize) {
+                        $retinaImage = clone $this;
+
+                        if ($this->getWidth()) {
+                            $retinaImage->setWidth(ceil($this->getWidth() * $retinaSize));
+                        }
+
+                        if ($this->getHeight()) {
+                            $retinaImage->setHeight(ceil($this->getHeight() * $retinaSize));
+                        }
+
+                        if ($this->isWebp()) {
+                            $retinaWebpImage = clone $retinaImage;
+                            $webpSrc .= sprintf(', %s %sx', $retinaWebpImage->setFormat(self::IMAGE_FORMAT_WEBP)->get(), $retinaSize);
+                        }
+
+                        if ($this->tag === self::TAG_SOURCE) {
+                            $retinaStandardSrc .= sprintf(', %s %sx', $retinaImage->get(), $retinaSize);
+                        } else {
+                            $markup .= $this->sourceMarkup(sprintf('%s, %s %sx', $retinaStandardSrc, $retinaImage->get(), $retinaSize), $this->getExtension());
+                        }
                     }
                 }
 
@@ -139,7 +147,7 @@ abstract class Source implements AdapterInterface
             }
 
             if ($standardSrc) {
-                $markup .= $this->getTag() === self::TAG_IMG ? $this->imgMarkup($standardSrc) : $this->sourceMarkup($standardSrc, $this->getExtension());
+                $markup .= $this->getTag() === self::TAG_IMG ? $this->imgMarkup($standardSrc) : $this->sourceMarkup($retinaStandardSrc ?: $standardSrc, $this->getExtension());
             }
         } else {
             $markup = $this->imgMarkup($this->getPath());

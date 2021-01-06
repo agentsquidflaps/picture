@@ -76,6 +76,7 @@ class Picture
 		$this->setParameter($source, 'attributes');
 		$this->setParameter($source, 'quality');
 		$this->setParameter($source, 'version');
+		$this->setParameter($source, 'retinaSizes');
 
 		return $this;
     }
