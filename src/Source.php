@@ -258,7 +258,8 @@ abstract class Source implements AdapterInterface
                 'tag' => self::TAG_SOURCE,
                 'lazyLoaded' => false,
                 'retina' => true,
-                'webp' => true
+                'webp' => true,
+                'fit' => Source::FIT_COVER
             ]);
 
         if ($this->isAjaxRequest()) {
@@ -277,7 +278,8 @@ abstract class Source implements AdapterInterface
             'tag' => $this->getTag(),
             'lazyLoaded' => $this->isLazyLoaded(),
             'retina' => $this->isRetina(),
-            'webp' => $this->isWebp()
+            'webp' => $this->isWebp(),
+            'fit' => $this->getFit()
         ], [$this, 'valueIsSet']);
     }
 
