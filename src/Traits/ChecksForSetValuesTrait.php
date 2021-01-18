@@ -6,7 +6,7 @@ namespace Agentsquidflaps\Picture\Traits;
  * Trait ChecksForSetValues
  * @package Agentsquidflaps\Picture\Traits
  */
-trait ChecksForSetValues
+trait ChecksForSetValuesTrait
 {
 	/**
 	 * @param $value

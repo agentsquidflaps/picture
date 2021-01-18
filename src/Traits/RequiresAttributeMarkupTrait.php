@@ -6,7 +6,7 @@ namespace Agentsquidflaps\Picture\Traits;
  * Trait RequiresAttributeMarkup
  * @package Agentsquidflaps\Picture\Traits
  */
-trait RequiresAttributeMarkup
+trait RequiresAttributeMarkupTrait
 {
     /**
      * @param array $attributes

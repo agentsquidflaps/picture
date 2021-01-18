@@ -6,7 +6,7 @@ namespace Agentsquidflaps\Picture\Traits;
  * Trait LocalSource
  * @package Agentsquidflaps\Picture\Traits
  */
-trait isLocal
+trait isLocalTrait
 {
 	/**
 	 * @return string
