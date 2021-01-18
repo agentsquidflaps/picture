@@ -2,9 +2,9 @@
 
 namespace Agentsquidflaps\Picture;
 
-use Agentsquidflaps\Picture\Traits\ChecksForSetValues;
-use Agentsquidflaps\Picture\Traits\RequiresAttributeMarkup;
-use Agentsquidflaps\Picture\Traits\isSource;
+use Agentsquidflaps\Picture\Traits\ChecksForSetValuesTrait;
+use Agentsquidflaps\Picture\Traits\RequiresAttributeMarkupTrait;
+use Agentsquidflaps\Picture\Traits\isSourceTrait;
 
 use function \array_pop;
 use function \ucfirst;
@@ -15,9 +15,9 @@ class Picture
     /** @var Source[]|array */
     private $sources;
 
-    use ChecksForSetValues;
-    use RequiresAttributeMarkup;
-    use isSource;
+    use ChecksForSetValuesTrait;
+    use RequiresAttributeMarkupTrait;
+    use isSourceTrait;
 
     /**
      * Picture constructor.
@@ -62,7 +62,7 @@ class Picture
 	 * @param Source $source
 	 * @return $this
 	 */
-	private function setPictureDefaults(Source $source): Picture
+	protected function setPictureDefaults(Source $source): Picture
 	{
 		$this->setParameter($source, 'path');
 		$this->setParameter($source, 'lazyLoaded', 'is');
@@ -82,7 +82,7 @@ class Picture
     }
 
 
-	private function setParameter(Source $source, string $parameter, string $getterPrefix = 'get')
+	protected function setParameter(Source $source, string $parameter, string $getterPrefix = 'get')
 	{
 		if ($this->valueIsSet($this->$parameter)) {
 			$parsedParameter = ucfirst($parameter);

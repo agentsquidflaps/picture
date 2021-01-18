@@ -8,7 +8,7 @@ use Agentsquidflaps\Picture\Source;
  * Trait SourceTrait
  * @package Agentsquidflaps\Picture\Traits
  */
-trait isSource {
+trait isSourceTrait {
 	/**
 	 * @var int
 	 *

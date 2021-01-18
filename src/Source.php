@@ -3,9 +3,9 @@
 namespace Agentsquidflaps\Picture;
 
 use Agentsquidflaps\Picture\Adapter\AdapterInterface;
-use Agentsquidflaps\Picture\Traits\ChecksForSetValues;
-use Agentsquidflaps\Picture\Traits\RequiresAttributeMarkup;
-use Agentsquidflaps\Picture\Traits\isSource;
+use Agentsquidflaps\Picture\Traits\ChecksForSetValuesTrait;
+use Agentsquidflaps\Picture\Traits\RequiresAttributeMarkupTrait;
+use Agentsquidflaps\Picture\Traits\isSourceTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 use function \rawurlencode;
@@ -69,9 +69,9 @@ abstract class Source implements AdapterInterface
     /** @var string | null */
     private $extension = null;
 
-    use ChecksForSetValues;
-    use RequiresAttributeMarkup;
-    use isSource;
+    use ChecksForSetValuesTrait;
+    use RequiresAttributeMarkupTrait;
+    use isSourceTrait;
 
     /**
      * @return MediaQuery|null
@@ -227,7 +227,7 @@ abstract class Source implements AdapterInterface
     /**
      * @return mixed|string
      */
-    private function type($format)
+    protected function type($format)
     {
         if (!$this->getPath()) {
             return '';
@@ -250,7 +250,7 @@ abstract class Source implements AdapterInterface
         return $this->extension;
     }
 
-    private function setDefaults()
+    protected function setDefaults()
     {
         $this->setOptions($this->getSelectedDefaults() + [
                 'fill' => '#000000',
@@ -270,7 +270,7 @@ abstract class Source implements AdapterInterface
     /**
      * @return array
      */
-    private function getSelectedDefaults()
+    protected function getSelectedDefaults()
     {
         return array_filter([
             'fill' => $this->getFill(),
@@ -286,7 +286,7 @@ abstract class Source implements AdapterInterface
     /**
      * @return bool
      */
-    private function isAjaxRequest()
+    protected function isAjaxRequest()
     {
         $request = Request::createFromGlobals();
         $requestedWith = $request->server->get('HTTP_X_REQUESTED_WITH');
