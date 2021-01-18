@@ -3,7 +3,7 @@
 namespace Agentsquidflaps\Picture\Adapter;
 
 use Agentsquidflaps\Picture\Source;
-use Agentsquidflaps\Picture\Traits\isLocal;
+use Agentsquidflaps\Picture\Traits\isLocalTrait;
 use Intervention\Image\Constraint;
 use Intervention\Image\ImageManagerStatic;
 
@@ -13,7 +13,7 @@ use Intervention\Image\ImageManagerStatic;
  */
 class Intervention extends Source
 {
-    use isLocal;
+    use isLocalTrait;
 
     /**
      * @return string
