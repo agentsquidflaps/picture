@@ -10,11 +10,11 @@ use Agentsquidflaps\Picture\Source;
  */
 trait isSourceTrait {
 	/**
-	 * @var int
+	 * @var int | null
 	 *
 	 * If your environment caters for file versions, you may need to set the version for cache busting purposes
 	 */
-	protected $version = 1;
+	protected $version;
 
 	/** @var string | null */
 	protected $fill;
@@ -61,25 +61,25 @@ trait isSourceTrait {
 	/** @var string | null */
 	protected $position;
 
-	/** @var string | int */
-	protected $quality = 80;
+	/** @var string | int | null */
+	protected $quality;
 
-	/** @var float[] | array */
-	protected $retinaSizes = [2];
+	/** @var float[] | array | null */
+	protected $retinaSizes;
 
 	/**
-	 * @return int
+	 * @return int|null
 	 */
-	public function getVersion(): int
+	public function getVersion()
 	{
 		return $this->version;
 	}
 
 	/**
-	 * @param int $version
+	 * @param int|null $version
 	 * @return self
 	 */
-	public function setVersion(int $version): self
+	public function setVersion($version): self
 	{
 		$this->version = $version;
 		return $this;
@@ -375,7 +375,7 @@ trait isSourceTrait {
 	}
 
     /**
-     * @return array|float[]
+     * @return array|float[]|null
      */
     public function getRetinaSizes()
     {
@@ -383,10 +383,10 @@ trait isSourceTrait {
     }
 
     /**
-     * @param array|float[] $retinaSizes
+     * @param array|float[]|null $retinaSizes
      * @return $this
      */
-    public function setRetinaSizes(array $retinaSizes): self
+    public function setRetinaSizes($retinaSizes): self
     {
         $this->retinaSizes = $retinaSizes;
         return $this;
