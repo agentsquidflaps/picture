@@ -259,7 +259,10 @@ abstract class Source implements AdapterInterface
                 'lazyLoaded' => false,
                 'retina' => true,
                 'webp' => true,
-                'fit' => Source::FIT_COVER
+                'fit' => Source::FIT_COVER,
+                'retinaSizes' => [2],
+                'quality' => 80,
+                'version' => 1
             ]);
 
         if ($this->isAjaxRequest()) {
@@ -279,7 +282,10 @@ abstract class Source implements AdapterInterface
             'lazyLoaded' => $this->isLazyLoaded(),
             'retina' => $this->isRetina(),
             'webp' => $this->isWebp(),
-            'fit' => $this->getFit()
+            'fit' => $this->getFit(),
+            'retinaSizes' => $this->getRetinaSizes(),
+            'quality' => $this->getQuality(),
+            'version' => $this->getVersion()
         ], [$this, 'valueIsSet']);
     }
 
